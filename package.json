@@ -1,0 +1,22 @@
+{
+  "name": "mongodb_backup",
+  "version": "0.1.0",
+  "description": "Cron tasks to backup mongo db",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "backup-cron": "MODE=cron nodemon node scripts/backup_db.js",
+    "backup": "node scripts/backup_db.js",
+    "restore": "node scripts/restore_db.js"
+  },
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "node-cron": "^3.0.2",
+    "select-prompt": "^0.3.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.22"
+  }
+}
