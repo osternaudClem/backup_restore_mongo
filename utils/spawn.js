@@ -1,9 +1,14 @@
 import { spawn } from 'child_process';
+import * as dotenv from 'dotenv';
 
 import { log, type } from './logs.js';
 import { backupDir } from './file.js';
 
+dotenv.config();
+
 const PROCESS_AUTHORIZED = ['mongodump', 'mongorestore'];
+const USERNAME = process.env.MONGO_USERNAME || null;
+const PASSWORD = process.env.MONGO_PASSWORD || null;
 
 export const execFunction = (process, db_name, db_backup) => {
   if (!PROCESS_AUTHORIZED.includes(process)) {
@@ -26,6 +31,14 @@ export const execFunction = (process, db_name, db_backup) => {
       break;
     default:
       return;
+  }
+
+  if (USERNAME) {
+    args.push(`--username=${USERNAME}`);
+  }
+
+  if (PASSWORD) {
+    args.push(`--password=${PASSWORD}`);
   }
 
   const child = spawn(process, args);
