@@ -14,8 +14,6 @@ const FILES_LIMIT = parseInt(process.env.FILES_LIMIT) || 20;
 const MODE = process.env.MODE; // CRON or none
 const CRON_SCHEDULE = process.env.CRON_SCHEDULE || '0 23 * * *'; // every day at 11pm
 
-console.log('>>> CRON_SCHEDULE', CRON_SCHEDULE);
-
 const createFolder = (dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
