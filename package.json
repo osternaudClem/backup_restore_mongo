@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "backup-cron": "MODE=cron nodemon node scripts/backup_db.js",
+    "start": "MODE=cron nodemon node scripts/backup_db.js",
     "backup": "node scripts/backup_db.js",
     "restore": "node scripts/restore_db.js"
   },
