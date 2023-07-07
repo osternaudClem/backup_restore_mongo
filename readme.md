@@ -25,7 +25,7 @@ If the folder is full, the first file in this folder will be delete so the new b
 
 ### Backup Databases with CRON
 
-`MODE=cron yarn backup`
+`yarn start`
 
 ### Restore Database
 
