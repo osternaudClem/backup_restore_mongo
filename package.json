@@ -2,21 +2,39 @@
   "name": "mongodb_backup",
   "version": "0.1.0",
   "description": "Cron tasks to backup mongo db",
+  "repository": "git@github.com:osternaudClem/backup_restore_mongo.git",
+  "author": "Cl3tus <osternaud.clement@gmail.com>",
   "main": "index.js",
   "license": "MIT",
-  "type": "module",
   "scripts": {
-    "start": "MODE=cron nodemon node scripts/backup_db.js",
-    "backup": "node scripts/backup_db.js",
-    "restore": "node scripts/restore_db.js"
+    "build": "npx tsc",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx '**/*'",
+    "start": "MODE=cron nodemon node dist/scripts/backup_db.js",
+    "backup": "node dist/scripts/backup_db.js",
+    "restore": "node dist/scripts/restore_db.js"
   },
   "dependencies": {
     "chalk": "^5.2.0",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
     "node-cron": "^3.0.2",
+    "path": "^0.12.7",
     "select-prompt": "^0.3.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/eslint-parser": "^7.21.3",
+    "@babel/preset-env": "^7.21.4",
+    "@types/node": "^20.5.4",
     "dotenv": "^16.0.3",
-    "nodemon": "^2.0.22"
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-typescript": "^0.14.0",
+    "nodemon": "^2.0.22",
+    "prettier": "^3.0.2",
+    "typescript": "5.1.0"
   }
 }

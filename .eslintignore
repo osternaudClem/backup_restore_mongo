@@ -1,0 +1,6 @@
+types/
+dist/
+backup/
+yarn-error.log
+yarn.lock
+**/*.md

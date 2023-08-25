@@ -1,11 +1,13 @@
-import * as dotenv from 'dotenv';
 import fs from 'fs';
-import cron from 'node-cron';
 import path from 'path';
 
-import { log, type } from '../utils/logs.js';
-import { backupDir } from '../utils/file.js';
-import { execFunction } from '../utils/spawn.js';
+import * as dotenv from 'dotenv';
+import cron from 'node-cron';
+
+import { exportToDropbox } from '../utils/dropbox';
+import { backupDir } from '../utils/file';
+import { log, type } from '../utils/logs';
+import { execFunction } from '../utils/spawn';
 
 dotenv.config();
 
@@ -14,7 +16,7 @@ const FILES_LIMIT = parseInt(process.env.FILES_LIMIT) || 20;
 const MODE = process.env.MODE; // CRON or none
 const CRON_SCHEDULE = process.env.CRON_SCHEDULE || '0 23 * * *'; // every day at 11pm
 
-const createFolder = (dir) => {
+const createFolder = (dir: string) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
@@ -30,12 +32,12 @@ const getDate = () => {
   return `${year}-${month}-${day}`;
 };
 
-const cleanFolder = (dir) => {
+const cleanFolder = (dir: string) => {
   fs.readdir(dir, (error, files) => {
     if (files.length >= FILES_LIMIT) {
       fs.unlink(`${dir}/${files[0]}`, (error) => {
         if (error) {
-          type.log(danger(error));
+          log(type.danger(error));
           return;
         }
         log(type.warning(`${files[0]} deleted !`));
@@ -52,6 +54,7 @@ const runBackup = () => {
     createFolder(archive_path);
     cleanFolder(archive_path);
     execFunction('mongodump', db_name, `${db_name}-${getDate()}`);
+    exportToDropbox(archive_path, `${db_name}-${getDate()}`);
   });
 };
 

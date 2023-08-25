@@ -1,11 +1,10 @@
-import { spawn } from 'child_process';
 import fs from 'fs';
-import selectPrompt from 'select-prompt';
-import path from 'path';
 
-import { log, type } from '../utils/logs.js';
-import { backupDir } from '../utils/file.js';
-import { execFunction } from '../utils/spawn.js';
+import selectPrompt from 'select-prompt';
+
+import { backupDir } from '../utils/file';
+import { log, type } from '../utils/logs';
+import { execFunction } from '../utils/spawn';
 
 const folders = [];
 const backup_files = [];
@@ -20,7 +19,7 @@ const getDir = () => {
   });
 };
 
-const getFiles = (folder) => {
+const getFiles = (folder: string) => {
   const files = fs.readdirSync(`${backupDir}/${folder}`);
   files.map((file) => {
     const isFile = fs.lstatSync(`${backupDir}/${folder}/${file}`).isFile();
@@ -34,18 +33,18 @@ const chooseFolder = () => {
   getDir();
 
   selectPrompt('Choose the database you want to restore ...', folders)
-    .on('abort', (folder) => log(type.warning('Aborted with', folder)))
-    .on('submit', (folder) => {
+    .on('abort', (folder: string) => log(type.warning('Aborted with', folder)))
+    .on('submit', (folder: string) => {
       chooseBackup(folder);
     });
 };
 
-const chooseBackup = (folder) => {
+const chooseBackup = (folder: string) => {
   getFiles(folder);
 
   selectPrompt('Choose the backup file ...', backup_files)
-    .on('abort', (file) => log(type.warning('Aborted with', file)))
-    .on('submit', (file) => {
+    .on('abort', (file: string) => log(type.warning('Aborted with', file)))
+    .on('submit', (file: string) => {
       execFunction('mongorestore', folder, file);
     });
 };
